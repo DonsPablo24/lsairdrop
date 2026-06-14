@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/scripts",
+      "destination": "http://43.228.215.169:3000/api/scripts"
+    },
+    {
+      "source": "/verifyKey",
+      "destination": "http://43.228.215.169:3000/verifyKey"
+    }
+  ]
+}
