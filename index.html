@@ -267,7 +267,7 @@
                     <h2 class="text-3xl font-medium tracking-tight text-white mb-2">LS Repository</h2>
                     <p class="text-gray-400 font-light text-sm">List Script / BOT</p>
                 </div>
-                <a href="scripts.html" class="font-mono text-xs text-gray-500 hover:text-white transition-colors">View All -></a>
+                <a href="/repository" class="font-mono text-xs text-gray-500 hover:text-white transition-colors">View All -></a>
             </div>
 
             <div class="relative">
@@ -526,7 +526,7 @@
             let html = '';
             
             // Cek apakah ini halaman index.html (Home)
-            const isHomePage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+            const isHomePage = window.location.pathname.includes('dashboard') || window.location.pathname === '/' || window.location.pathname === '';
             
             // Di Home cuma tampil 3 maksimal, di scripts.html tampil semua
             const maxItems = isHomePage ? 3 : repoData.length;
