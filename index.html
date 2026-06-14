@@ -241,19 +241,18 @@
             </div>
 
 
-            <!-- Minimal Stats (Margin atas disesuaikan agar rapi dengan ticker) -->
-            <div class="flex justify-center gap-12 mt-12 mb-10">
+<div class="flex justify-center gap-12 mt-12 mb-10">
                 <div class="text-center">
-                    <p class="text-2xl text-white font-mono">42</p>
+                    <p id="stat-total" class="text-2xl text-white font-mono">0</p>
                     <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Scripts</p>
                 </div>
                 <div class="text-center">
-                    <p class="text-2xl text-white font-mono">12k</p>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Nodes</p>
+                    <p id="stat-python" class="text-2xl text-white font-mono">0</p>
+                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Python</p>
                 </div>
                 <div class="text-center">
-                    <p class="text-2xl text-white font-mono">99%</p>
-                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Uptime</p>
+                    <p id="stat-nodejs" class="text-2xl text-white font-mono">0</p>
+                    <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Node.js</p>
                 </div>
             </div>
             
@@ -472,14 +471,43 @@
         let repoData = [];
 
         // --- 2. Mengambil Data dari Server (Firebase via API) ---
+// --- 2. Mengambil Data dari Server (Firebase via API) ---
         async function fetchScripts() {
             try {
-                // PENTING: Jika bot/server sudah jalan di VPS, ganti localhost ini dengan IP VPS kamu
-                // Contoh: fetch('http://192.168.1.1:3000/api/scripts')
+                // Mengambil data dari server
                 const response = await fetch('/api/scripts');
                 repoData = await response.json();
                 
-                // Setelah data berhasil diambil, jalankan fungsi pembuat Card
+                // ====================================================
+                // LOGIKA PENGHITUNG STATISTIK REAL-TIME
+                // ====================================================
+                const statTotal = document.getElementById('stat-total');
+                const statPython = document.getElementById('stat-python');
+                const statNodejs = document.getElementById('stat-nodejs');
+
+                if (statTotal && statPython && statNodejs) {
+                    let totalCount = repoData.length;
+                    let pythonCount = 0;
+                    let nodeCount = 0;
+
+                    // Hitung bahasa masing-masing script
+                    repoData.forEach(item => {
+                        let lang = (item.lang || '').toLowerCase();
+                        if (lang.includes('python')) {
+                            pythonCount++;
+                        } else if (lang.includes('node') || lang === 'js' || lang.includes('javascript')) {
+                            nodeCount++;
+                        }
+                    });
+
+                    // Update angka di layar HTML
+                    statTotal.innerText = totalCount;
+                    statPython.innerText = pythonCount;
+                    statNodejs.innerText = nodeCount;
+                }
+                // ====================================================
+                
+                // Setelah data berhasil diambil & dihitung, jalankan fungsi pembuat Card
                 renderCards();
             } catch (error) {
                 console.error("Gagal memuat data dari server:", error);
