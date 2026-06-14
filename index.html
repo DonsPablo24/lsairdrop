@@ -110,6 +110,33 @@
         .animate-ticker:hover {
             animation-play-state: paused;
         }
+        /* Animasi Eksekusi Terminal */
+@keyframes terminal-run {
+    0% { opacity: 0; transform: translateX(-5px); }
+    3% { opacity: 1; transform: translateX(0); }
+    95% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; }
+}
+.term-line {
+    opacity: 0;
+    animation: terminal-run 12s infinite;
+    animation-fill-mode: forwards;
+}
+.d-1 { animation-delay: 0s; }
+.d-2 { animation-delay: 1.5s; }
+.d-3 { animation-delay: 2s; }
+.d-4 { animation-delay: 3.5s; }
+.d-5 { animation-delay: 4.5s; }
+.d-6 { animation-delay: 5s; }
+.d-7 { animation-delay: 6s; }
+.d-8 { animation-delay: 7.5s; }
+.d-9 { animation-delay: 8.5s; }
+
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.d-10 { animation-delay: 9.5s; }
     </style>
 </head>
 <body class="antialiased selection:bg-gray-800 selection:text-white">
@@ -130,11 +157,11 @@
                 <div class="hidden md:flex space-x-8 items-center font-mono text-sm">
                     <a href="#repository" class="text-gray-400 hover:text-white transition-colors">/repo</a>
                     <a href="#features" class="text-gray-400 hover:text-white transition-colors">/system</a>
-                    <a href="#community" class="text-gray-400 hover:text-white transition-colors">/node</a>
+                    <a href="#tutorials" class="text-gray-400 hover:text-white transition-colors">/about</a>
                     
-                    <button onclick="openAuthModal()" class="btn-minimal px-4 py-1.5 rounded-sm text-xs uppercase tracking-wider focus:outline-none">
-                        Auth
-                    </button>
+                    <a href="https://t.me/LS_AIRDROP" target="_blank" class="btn-minimal px-4 py-1.5 rounded-sm text-xs uppercase tracking-wider focus:outline-none flex items-center gap-2 hover:text-[#0088cc]">
+                    <i class="fa-brands fa-telegram"></i> Community
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -151,8 +178,10 @@
             <div class="px-6 py-4 space-y-4 flex flex-col font-mono text-sm">
                 <a href="#repository" class="text-gray-400 hover:text-white block">/repo</a>
                 <a href="#features" class="text-gray-400 hover:text-white block">/system</a>
-                <a href="#community" class="text-gray-400 hover:text-white block">/node</a>
-                <button onclick="openAuthModal()" class="w-full btn-minimal text-center block py-2 mt-2 rounded-sm uppercase tracking-wider focus:outline-none">Auth</button>
+                <a href="#tutorials" class="text-gray-400 hover:text-white block">/about</a>
+                <a href="https://t.me/LS_AIRDROP" target="_blank" class="w-full btn-minimal flex justify-center items-center gap-2 py-2 mt-2 rounded-sm uppercase tracking-wider focus:outline-none hover:text-[#0088cc]">
+    <i class="fa-brands fa-telegram"></i> Community
+</a>
             </div>
         </div>
     </nav>
@@ -162,7 +191,7 @@
         <div class="max-w-6xl mx-auto px-6 w-full text-center">
             
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-[#262626] bg-[#171717]/50 text-gray-400 text-xs font-mono mb-8">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                 v2.0.4 - System Operational
             </div>
             
@@ -248,85 +277,99 @@
             </div>
         </div>
     </section>
-    <!-- System Specs Section -->
-    <section id="features" class="py-24 relative z-10 bg-[#050505] border-y border-[#171717]">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<section id="features" class="py-24 relative z-10 bg-[#050505] border-y border-[#171717]">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-5 flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] uppercase tracking-widest font-mono mb-6 w-max">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                    100% Free Use
+                </div>
                 
-                <div class="lg:col-span-5 flex flex-col justify-center">
-                    <h2 class="text-3xl font-medium tracking-tight text-white mb-6">System Architecture</h2>
-                    <p class="text-gray-400 font-light leading-relaxed mb-8">
-                        Kami tidak sekadar membuat bot. Kami membangun infrastruktur yang aman untuk skala besar. Semua script berjalan di mesin lokal Anda; tidak ada private key yang pernah menyentuh server kami.
-                    </p>
-                    
-                    <div class="space-y-4 font-mono text-sm">
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-check text-gray-500 mt-1"></i>
-                            <div>
-                                <span class="text-white block mb-1">Anti-Sybil Engine</span>
-                                <span class="text-gray-500 text-xs">Modul randomisasi waktu & rute protokol.</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-check text-gray-500 mt-1"></i>
-                            <div>
-                                <span class="text-white block mb-1">Proxy Integrations</span>
-                                <span class="text-gray-500 text-xs">Rotasi HTTP/SOCKS5 per wallet otomatis.</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-check text-gray-500 mt-1"></i>
-                            <div>
-                                <span class="text-white block mb-1">Gas Monitor</span>
-                                <span class="text-gray-500 text-xs">Auto-pause saat Gwei jaringan tinggi.</span>
-                            </div>
-                        </div>
+                <h2 class="text-3xl font-medium tracking-tight text-white mb-6">Mengapa LS Airdrop?</h2>
+                <p class="text-gray-400 font-light leading-relaxed mb-8">
+                    Kumpulan script dan bot otomatis untuk membantu aktivitas airdrop. Seluruhnya dapat digunakan secara gratis. Cukup instal, jalankan, dan biarkan sistem bekerja secara otomatis.
+                </p>
+                
+                <div class="space-y-4 font-mono text-sm">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-download text-gray-500"></i>
+                        <span class="text-white">Download Script Pilihan</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fa-brands fa-npm text-gray-500"></i>
+                        <span class="text-white">Install Dependencies</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-bolt text-yellow-500"></i>
+                        <span class="text-white">Bot Berjalan Otomatis</span>
                     </div>
                 </div>
-
-                <!-- Minimalist Code Snippet Graphic -->
-                <div class="lg:col-span-7 bg-[#0a0a0a] border border-[#262626] rounded-sm p-1">
-                    <div class="bg-[#050505] rounded-sm p-6 h-full font-mono text-sm leading-relaxed overflow-x-auto text-gray-300">
-                        <div class="text-gray-600 mb-4">/* ls-core/engine.ts */</div>
-                        <div><span class="text-[#c678dd]">import</span> { AntiSybil, ProxyManager } <span class="text-[#c678dd]">from</span> <span class="text-[#98c379]">'@ls/core'</span>;</div>
-                        <br>
-                        <div><span class="text-[#c678dd]">async function</span> <span class="text-[#61afef]">executeFarm</span>(wallets) {</div>
-                        <div class="pl-4"><span class="text-[#c678dd]">for</span> (<span class="text-[#e5c07b]">const</span> wallet <span class="text-[#c678dd]">of</span> wallets) {</div>
-                        <div class="pl-8">
-                            <span class="text-[#e5c07b]">const</span> proxy = <span class="text-[#c678dd]">await</span> ProxyManager.<span class="text-[#61afef]">assign</span>(wallet);<br>
-                            <span class="text-[#e5c07b]">const</span> delay = AntiSybil.<span class="text-[#61afef]">getRandomDelay</span>(<span class="text-[#d19a66]">300</span>, <span class="text-[#d19a66]">1200</span>);<br>
-                            <br>
-                            <span class="text-[#5c6370]">// Await human-like delay</span><br>
-                            <span class="text-[#c678dd]">await</span> <span class="text-[#61afef]">sleep</span>(delay);<br>
-                            <br>
-                            <span class="text-[#c678dd]">try</span> {<br>
-                            <div class="pl-4">
-                                <span class="text-[#c678dd]">await</span> wallet.<span class="text-[#61afef]">interact</span>({<br>
-                                <div class="pl-4">
-                                    target: <span class="text-[#98c379]">'zksync'</span>,<br>
-                                    action: <span class="text-[#98c379]">'random_dapp'</span>,<br>
-                                    proxy: proxy<br>
-                                </div>
-                                });<br>
-                            </div>
-                            } <span class="text-[#c678dd]">catch</span> (error) {<br>
-                            <div class="pl-4">Logger.<span class="text-[#61afef]">error</span>(<span class="text-[#98c379]">'Tx Failed'</span>, error);</div>
-                            }
-                        </div>
-                        <div class="pl-4">}</div>
-                        <div>}</div>
-                    </div>
-                </div>
-
             </div>
+
+            <div class="lg:col-span-7 bg-[#0a0a0a] border border-[#262626] rounded-sm p-1">
+                <div class="bg-[#171717] px-4 py-2 border-b border-[#262626] flex items-center justify-between">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                    </div>
+                    <span class="text-[10px] text-gray-500 font-mono tracking-widest">user@macbook:~ ls-bot</span>
+                </div>
+                
+<div class="bg-[#050505] p-6 h-64 font-mono text-xs md:text-sm leading-relaxed overflow-hidden text-gray-300 relative flex flex-col justify-end">
+    <!-- Container untuk baris-baris log -->
+    <div class="space-y-1.5 w-full">
+        <!-- Step 1: Install -->
+        <div class="term-line d-1">
+            <span class="text-green-400">user@macbook:~$</span> npm install
         </div>
-    </section>
+        <div class="term-line d-2 text-gray-500">
+            added 42 packages, and audited 43 packages in 2s
+        </div>
+        <div class="term-line d-3 text-gray-500 mb-4">
+            found <span class="text-green-400">0</span> vulnerabilities
+        </div>
+
+        <!-- Step 2: Run -->
+        <div class="term-line d-4 mt-2">
+            <span class="text-green-400">user@macbook:~$</span> npm start
+        </div>
+        
+        <!-- Step 3: Bot Logs -->
+        <div class="term-line d-5 text-[#c678dd]">
+            > [LS-AIRDROP] Initializing Module...
+        </div>
+        <div class="term-line d-6 text-blue-400">
+            > [INFO] Loading 10 wallets from private_keys.txt
+        </div>
+        <div class="term-line d-7 text-yellow-400">
+            > [PROXY] Connected to Proxy 192.168.x.x
+        </div>
+        <div class="term-line d-8 text-white">
+            > [ACTION] Interacting with contract 0xA1B...99F
+        </div>
+        <div class="term-line d-9 font-bold text-green-400">
+            > [SUCCESS] Wallet 1: Transaction Confirmed! Gas used: $0.12
+        </div>
+
+        <!-- Step 4: Final Prompt (Sudah tidak absolute lagi) -->
+        <div class="term-line d-10 mt-4 flex items-center">
+            <span class="text-green-400 mr-2">user@macbook:~$</span><div class="w-2 h-4 bg-gray-400 cursor-blink"></div>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</section>
 <section id="tutorials" class="py-12 relative z-10 border-t border-[#171717]">
         <div class="max-w-4xl mx-auto px-6">
             <div class="flex justify-between items-end mb-8">
                 <div>
-                    <h2 class="text-2xl font-medium tracking-tight text-white mb-2">Operation Visuals</h2>
-                    <p class="text-gray-400 font-light text-sm">Dokumentasi operasional & demo eksekusi script.</p>
+                    <h2 class="text-2xl font-medium tracking-tight text-white mb-2">Channel Youtube</h2>
+                    <p class="text-gray-400 font-light text-sm">Konten Airdrop Gratis.</p>
                 </div>
                 <a href="https://www.youtube.com/watch?v=1F-25HsVE4Y" target="_blank" class="font-mono text-xs text-red-500 hover:text-red-400 transition-colors flex items-center gap-2">
                     <i class="fa-brands fa-youtube"></i> Subscribe
@@ -425,34 +468,65 @@
 
 <script src="database.js"></script>
 
-    <script>
-        // --- Mesin Render Data Dinamis ---
+<script>
+        // --- Mesin Render Data Dinamis dengan Embed YouTube ---
         function renderCards() {
             const grid = document.getElementById('repo-grid');
             if (!grid) return;
 
             let html = '';
             
-            // Khusus index.html, kita batasi maksimal 3 card yang tampil untuk showcase
-            const maxItems = Math.min(3, repoData.length);
+            // Cek apakah ini halaman index.html (Home)
+            const isHomePage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+            
+            // Di Home cuma tampil 3, di scripts.html tampil semua
+            const maxItems = isHomePage ? 3 : repoData.length;
 
             for (let i = 0; i < maxItems; i++) {
                 if (!repoData[i]) break; 
                 const item = repoData[i];
 
+                // Menyiapkan ID Video. Jika di database.js belum ada 'youtubeId', pakai video default
+                const ytId = item.youtubeId || "1F-25HsVE4Y";
+
+                // Block HTML untuk embed video
+                const videoEmbed = `
+                <div class="my-4 border border-[#262626] p-1 bg-[#050505] rounded-sm group-hover:border-[#525252] transition-colors duration-200">
+                    <div class="relative w-full aspect-video bg-[#0a0a0a]">
+                        <iframe class="absolute top-0 left-0 w-full h-full rounded-sm opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                            src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1" 
+                            title="${item.title} Tutorial" frameborder="0" 
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                `;
+
                 html += `
                 <div class="tech-card p-6 rounded-sm flex flex-col h-full group script-item">
-                    <div class="flex justify-between items-start mb-6">
+                    <div class="flex justify-between items-start mb-4">
                         <div class="text-gray-400"><i class="${item.icon} text-xl"></i></div>
                         <span class="px-2 py-0.5 text-[10px] font-mono border ${item.tagStyle} rounded-sm tag">${item.tag}</span>
                     </div>
+                    
                     <h3 class="text-lg text-white font-medium mb-2 group-hover:text-blue-400 transition-colors title">${item.title}</h3>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow desc">
+                    
+                    <p class="text-sm text-gray-400 font-light leading-relaxed mb-2 flex-grow desc">
                         ${item.desc}
                     </p>
-                    <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
+                    
+                    ${videoEmbed}
+
+                    <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center gap-2">
                         <span class="text-xs font-mono text-gray-500 lang">${item.lang}</span>
-                        <button onclick="requestDownload('${item.downloadUrl}', '${item.id}')" class="btn-minimal px-3 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-2"><i class="fa-solid fa-download"></i> Download</button>
+                        <div class="flex gap-2">
+                            <a href="https://youtu.be/${ytId}" target="_blank" class="btn-outline px-2.5 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-1.5" title="Tonton di YouTube">
+                                <i class="fa-brands fa-youtube text-red-500"></i> Video
+                            </a>
+                            <button onclick="requestDownload('${item.downloadUrl}', '${item.id}')" class="btn-minimal px-3 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download
+                            </button>
+                        </div>
                     </div>
                 </div>
                 `;
@@ -463,7 +537,7 @@
         // Jalankan fungsi render saat halaman dimuat
         renderCards();
 
-        // --- Search Logic (Aman disisipkan karena ada pengecekan if) ---
+        // --- Search Logic ---
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('keyup', function() {
