@@ -438,7 +438,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-terminal text-gray-400 text-xs"></i>
-                        <h3 class="text-white font-mono text-sm tracking-tight">ls_auth_module</h3>
+                        <h3 class="text-white font-mono text-sm tracking-tight">SECURITY_CHECK</h3>
                     </div>
                     <button onclick="closeAuthModal()" class="text-gray-500 hover:text-white transition-colors focus:outline-none">
                         <i class="fa-solid fa-xmark"></i>
@@ -446,7 +446,7 @@
                 </div>
                 
                 <div class="mb-6">
-                    <label class="block text-gray-400 text-[10px] uppercase tracking-widest font-mono mb-2">ENTER_DECRYPTION_KEY:</label>
+                    <label class="block text-gray-400 text-[10px] uppercase tracking-widest font-mono mb-2">INPUT YOUR KEY:</label>
                     <div class="relative font-mono">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">></span>
                         <input type="password" id="auth-key-input" class="w-full bg-[#171717] border border-[#262626] rounded-sm py-2.5 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-[#525252] transition-colors" placeholder="****" autocomplete="off" onkeypress="handleAuthKeyPress(event)">
@@ -466,10 +466,31 @@
         </div>
     </div>
 
-<script src="database.js"></script>
 
 <script>
-        // --- Mesin Render Data Dinamis dengan Embed YouTube ---
+        // --- 1. Deklarasi Wadah Data ---
+        let repoData = [];
+
+        // --- 2. Mengambil Data dari Server (Firebase via API) ---
+        async function fetchScripts() {
+            try {
+                // PENTING: Jika bot/server sudah jalan di VPS, ganti localhost ini dengan IP VPS kamu
+                // Contoh: fetch('http://192.168.1.1:3000/api/scripts')
+                const response = await fetch('http://43.228.215.169.nip.io/api/scripts');
+                repoData = await response.json();
+                
+                // Setelah data berhasil diambil, jalankan fungsi pembuat Card
+                renderCards();
+            } catch (error) {
+                console.error("Gagal memuat data dari server:", error);
+                const grid = document.getElementById('repo-grid');
+                if (grid) {
+                    grid.innerHTML = '<p class="text-red-500 font-mono text-sm col-span-full text-center mt-10">> Database Offline: Gagal terhubung ke server.</p>';
+                }
+            }
+        }
+
+        // --- 3. Mesin Render Data Dinamis dengan Embed YouTube ---
         function renderCards() {
             const grid = document.getElementById('repo-grid');
             if (!grid) return;
@@ -479,14 +500,14 @@
             // Cek apakah ini halaman index.html (Home)
             const isHomePage = window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '';
             
-            // Di Home cuma tampil 3, di scripts.html tampil semua
+            // Di Home cuma tampil 3 maksimal, di scripts.html tampil semua
             const maxItems = isHomePage ? 3 : repoData.length;
 
             for (let i = 0; i < maxItems; i++) {
                 if (!repoData[i]) break; 
                 const item = repoData[i];
 
-                // Menyiapkan ID Video. Jika di database.js belum ada 'youtubeId', pakai video default
+                // Menyiapkan ID Video. Jika di database belum ada 'youtubeId', pakai video default
                 const ytId = item.youtubeId || "1F-25HsVE4Y";
 
                 // Block HTML untuk embed video
@@ -505,8 +526,8 @@
                 html += `
                 <div class="tech-card p-6 rounded-sm flex flex-col h-full group script-item">
                     <div class="flex justify-between items-start mb-4">
-                        <div class="text-gray-400"><i class="${item.icon} text-xl"></i></div>
-                        <span class="px-2 py-0.5 text-[10px] font-mono border ${item.tagStyle} rounded-sm tag">${item.tag}</span>
+                        <div class="text-gray-400"><i class="${item.icon || 'fa-solid fa-code'} text-xl"></i></div>
+                        <span class="px-2 py-0.5 text-[10px] font-mono border ${item.tagStyle || 'border-gray-500 text-gray-500'} rounded-sm tag">${item.tag || 'Script'}</span>
                     </div>
                     
                     <h3 class="text-lg text-white font-medium mb-2 group-hover:text-blue-400 transition-colors title">${item.title}</h3>
@@ -534,10 +555,10 @@
             grid.innerHTML = html;
         }
 
-        // Jalankan fungsi render saat halaman dimuat
-        renderCards();
+        // --- 4. Jalankan Pengambilan Data Saat Halaman Dimuat ---
+        fetchScripts();
 
-        // --- Search Logic ---
+        // --- 5. Search Logic (Pencegahan jika dijalankan di index.html yang tidak ada kolom search) ---
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('keyup', function() {
@@ -568,7 +589,7 @@
             });
         }
 
-        // --- Modal & Decryption Logic (1 Code 1 Repo) ---
+        // --- 6. Modal & Decryption Logic (1 Code 1 Repo) ---
         const authModal = document.getElementById('auth-modal');
         const authInput = document.getElementById('auth-key-input');
         const authStatus = document.getElementById('auth-status');
@@ -579,18 +600,30 @@
         let pendingDownloadUrl = ''; 
         let currentRepoId = ''; 
 
-        function requestDownload(url, repoId) {
+       function requestDownload(url, repoId) {
             if (unlockedRepos[repoId]) {
                 window.open(url, '_blank');
             } else {
                 pendingDownloadUrl = url;
                 currentRepoId = repoId;
 
-                // Dinamis Update Link Bot sesuai Repo
+                // 1. Mencari Judul Script secara otomatis dari data yang diload
+                const scriptObj = repoData.find(item => item.id === repoId);
+                const scriptTitle = scriptObj ? scriptObj.title : 'Script Rahasia';
+
+                // 2. Mempercantik tombol Telegram (tanpa menampilkan ID)
                 const botLink = document.getElementById('bot-link');
                 if(botLink) {
-                    botLink.href = `https://t.me/LapakSwap_bot?start=${repoId}`;
-                    botLink.innerHTML = `<i class="fa-brands fa-telegram"></i> Ambil Key: ${repoId}`;
+                    // Link tujuannya TETAP menggunakan ID agar bot Telegram tidak bingung
+                    botLink.href = `https://t.me/betatestlsbot?start=${repoId}`;
+                    // Tapi teks yang dilihat user diubah jadi lebih profesional
+                    botLink.innerHTML = `<i class="fa-brands fa-telegram text-[#0088cc]"></i> Ambil Key via Bot`;
+                }
+
+                // 3. Menampilkan Judul Script di bagian kiri (sebagai pengganti teks abu-abu)
+                const authStatus = document.getElementById('auth-status');
+                if(authStatus) {
+                    authStatus.innerHTML = `Buka: <span class="text-white tracking-normal">${scriptTitle}</span>`;
                 }
 
                 openAuthModal();
@@ -640,8 +673,8 @@
             const currentDeviceId = window.navigator.userAgent + (window.screen.height + window.screen.width);
 
             try {
-                // Testing Lokal = http://localhost:3000/verifyKey
-                const response = await fetch('http://localhost:3000/verifyKey', {
+                // Testing Lokal = http://localhost:3000/verifyKey. PENTING: Ganti ke IP server VPS saat live.
+                const response = await fetch('http://43.228.215.169.nip.io/verifyKey', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -653,20 +686,19 @@
                 
                 const result = await response.json();
 
-                if (result.success) {
-                    authStatus.innerHTML = `<span class="text-green-500">${result.message} Memulai Unduhan...</span>`;
-                    verifyBtn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> Success';
+if (result.success) {
+                    // Beri tahu user untuk ngecek Telegram
+                    authStatus.innerHTML = `<span class="text-green-500">${result.message}</span>`;
+                    verifyBtn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> Cek Telegram!';
                     
                     unlockedRepos[currentRepoId] = true;
                     
                     setTimeout(() => {
                         closeAuthModal();
-                        if (pendingDownloadUrl) {
-                            window.open(pendingDownloadUrl, '_blank');
-                            pendingDownloadUrl = ''; 
-                            currentRepoId = '';
-                        }
-                    }, 1200);
+                        currentRepoId = '';
+                    }, 3000); // Waktu diperlama dikit biar user sempat baca
+
+                
 
                 } else {
                     authStatus.innerHTML = `<span class="text-red-500">Error: ${result.message}</span>`;
@@ -685,7 +717,7 @@
             }
         }
 
-        // --- Logika Mobile Menu ---
+        // --- 7. Logika Mobile Menu ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         if (btn && menu) {
@@ -709,6 +741,6 @@
                 });
             });
         }
-    </script>
+</script>
 </body>
 </html>
