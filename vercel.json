@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/api/scripts",
@@ -7,6 +8,31 @@
     {
       "source": "/verifyKey",
       "destination": "http://43.228.215.169:3000/verifyKey"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/repository",
+      "destination": "/scripts.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/scripts.html",
+      "destination": "/repository",
+      "permanent": true
     }
   ]
 }
