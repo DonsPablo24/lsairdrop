@@ -95,6 +95,21 @@
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #525252; }
+
+        /* Custom Ticker / Running Text Animasi */
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker {
+            display: flex;
+            width: max-content;
+            animation: ticker 20s linear infinite;
+        }
+        /* Opsional: Teks berhenti jalan saat disentuh mouse */
+        .animate-ticker:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gray-800 selection:text-white">
@@ -152,7 +167,7 @@
             </div>
             
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter text-white mb-6">
-                Automate The Grind.
+                LS AIRDROP
             </h1>
             
             <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
@@ -160,8 +175,8 @@
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4 font-mono text-sm">
-                <button onclick="openAuthModal()" class="btn-minimal px-8 py-3 rounded-sm flex items-center justify-center gap-2 focus:outline-none">
-                    Unlock Scripts <i class="fa-solid fa-lock text-xs"></i>
+                <button onclick="document.getElementById('repository').scrollIntoView({ behavior: 'smooth' })" class="btn-minimal px-8 py-3 rounded-sm flex items-center justify-center gap-2 focus:outline-none">
+                    Browse Scripts <i class="fa-solid fa-arrow-down text-xs"></i>
                 </button>
                 <a href="#guide" class="btn-outline px-8 py-3 rounded-sm flex items-center justify-center gap-2">
                     <i class="fa-solid fa-book-open text-xs"></i> Documentation
@@ -169,7 +184,36 @@
             </div>
 
             <!-- Minimal Stats -->
-            <div class="flex justify-center gap-12 mt-20 pt-10 border-t border-[#262626]/50">
+            <!-- Running Text / Ticker Promo Crypto Eceran -->
+<!-- Running Text / Ticker Promo Crypto Eceran -->
+            <div class="mt-14 relative w-full overflow-hidden border-y border-[#262626] bg-[#080808] py-2.5 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:bg-[#111111] transition-colors">
+                <!-- Wrapper yang berjalan (Isinya diduplikat 2x agar looping tidak putus) -->
+                <div class="animate-ticker text-xs font-mono text-gray-400 uppercase tracking-wider flex gap-12">
+                    
+                    <!-- Kelompok Teks 1 -->
+                    <a href="https://t.me/LapakSwap_bot" target="_blank" class="flex items-center gap-12 whitespace-nowrap cursor-pointer">
+                        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> CRYPTO MURAH</span>
+                        <span class="text-white font-medium">Ready Saldo Crypto Eceran (SOL, BNB, ETH, DLL)</span>
+                        <span>Transaksi Instan Via QRIS / E-Wallet</span>
+                        <span class="flex items-center gap-2 text-yellow-400"><i class="fa-solid fa-bolt"></i> Proses Cepat & Fee Rendah</span>
+                        <span class="text-blue-400 hover:text-blue-300 transition-colors"><i class="fa-brands fa-telegram"></i> Hubungi @LapakSwap_bot untuk Rate Hari Ini</span>
+                    </a>
+
+                    <!-- Kelompok Teks 2 (Duplikat persis kelompok 1) -->
+                    <a href="https://t.me/LapakSwap_bot" target="_blank" class="flex items-center gap-12 whitespace-nowrap cursor-pointer">
+                        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> CRYPTO MURAH</span>
+                        <span class="text-white font-medium">Ready Saldo Crypto Eceran (SOL, BNB, ETH, DLL)</span>
+                        <span>Transaksi Instan Via QRIS / E-Wallet</span>
+                        <span class="flex items-center gap-2 text-yellow-400"><i class="fa-solid fa-bolt"></i> Proses Cepat & Fee Rendah</span>
+                        <span class="text-blue-400 hover:text-blue-300 transition-colors"><i class="fa-brands fa-telegram"></i> Hubungi @LapakSwap_bot untuk Rate Hari Ini</span>
+                    </a>
+
+                </div>
+            </div>
+
+
+            <!-- Minimal Stats (Margin atas disesuaikan agar rapi dengan ticker) -->
+            <div class="flex justify-center gap-12 mt-12 mb-10">
                 <div class="text-center">
                     <p class="text-2xl text-white font-mono">42</p>
                     <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Scripts</p>
@@ -188,6 +232,7 @@
     </section>
 
     <!-- Repository Section -->
+<!-- Repository Section -->
     <section id="repository" class="py-24 relative z-10 border-t border-[#171717] scroll-mt-16">
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex justify-between items-end mb-12">
@@ -199,65 +244,70 @@
             </div>
 
             <div class="relative">
-                <!-- Locked Overlay -->
-                <div id="repo-lock-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center backdrop-blur-sm bg-[#0a0a0a]/70 border border-[#262626] rounded-sm transition-opacity duration-500">
-                    <div class="bg-[#171717] border border-[#262626] p-6 rounded-sm text-center shadow-2xl max-w-sm w-full mx-4">
-                        <i class="fa-solid fa-shield-halved text-4xl text-gray-400 mb-4"></i>
-                        <h3 class="text-white font-mono text-lg mb-2">Repository Encrypted</h3>
-                        <p class="text-gray-500 text-xs font-mono mb-6 leading-relaxed">Akses ke modul utama ditolak. Silakan masukkan kunci otorisasi untuk mendekripsi repository.</p>
-                        <button onclick="openAuthModal()" class="w-full btn-minimal px-6 py-2.5 rounded-sm text-xs uppercase tracking-wider font-mono focus:outline-none">
-                            Authenticate
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Grid Data (Blurred Initially) -->
-                <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 select-none pointer-events-none opacity-40 transition-all duration-700">
+                <!-- Grid Data (Sekarang Langsung Terbuka) -->
+                <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700">
                     
                     <!-- Card 1 -->
                     <div class="tech-card p-6 rounded-sm flex flex-col h-full group">
                         <div class="flex justify-between items-start mb-6">
-
-                <!-- Card 2 -->
-                <div class="tech-card p-6 rounded-sm flex flex-col h-full group">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="text-gray-400">
-                            <i class="fa-brands fa-js text-xl"></i>
-                        </div>
-                        <span class="px-2 py-0.5 text-[10px] font-mono border border-white text-white rounded-sm">HOT</span>
-                    </div>
-                    <h3 class="text-lg text-white font-medium mb-2 group-hover:text-yellow-400 transition-colors">l0-omni-bridge</h3>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow">
-                        Node.js script untuk LayerZero. Otomatisasi volume generation via Merkly dan L2Telegraph across 15 chains.
-                    </p>
-                    <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
-                        <span class="text-xs font-mono text-gray-500">ethers.js</span>
-                        <i class="fa-solid fa-lock text-xs text-gray-600"></i>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="tech-card p-6 rounded-sm flex flex-col h-full group">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="text-gray-400">
-                            <i class="fa-solid fa-terminal text-xl"></i>
-                        </div>
-                        <span class="px-2 py-0.5 text-[10px] font-mono border border-[#262626] text-gray-400 rounded-sm">NEW</span>
-                    </div>
-                    <h3 class="text-lg text-white font-medium mb-2 group-hover:text-green-400 transition-colors">sol-tx-spammer</h3>
-                    <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow">
-                            <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
-                                <span class="text-xs font-mono text-gray-500">solana-web3</span>
-                                <i class="fa-solid fa-lock text-xs text-gray-600 script-lock-icon transition-colors duration-300"></i>
+                            <div class="text-gray-400">
+                                <i class="fa-brands fa-python text-xl"></i>
                             </div>
+                            <span class="px-2 py-0.5 text-[10px] font-mono border border-[#262626] text-gray-400 rounded-sm">CORE</span>
                         </div>
-
+                        <h3 class="text-lg text-white font-medium mb-2 group-hover:text-blue-400 transition-colors">ls-anti-sybil-core</h3>
+                        <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow">
+                            Modul utama untuk randomisasi delay, slippage, dan rute transaksi. Wajib diintegrasikan ke semua script farming.
+                        </p>
+                        <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
+                            <span class="text-xs font-mono text-gray-500">python 3.9+</span>
+                            <!-- Tombol Download yang memicu Auth -->
+                            <button onclick="requestDownload('https://link-file-anda.com/script1.zip')" class="btn-minimal px-3 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-2"><i class="fa-solid fa-download"></i> Download</button>
+                        </div>
                     </div>
+
+                    <!-- Card 2 -->
+                    <div class="tech-card p-6 rounded-sm flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="text-gray-400">
+                                <i class="fa-brands fa-js text-xl"></i>
+                            </div>
+                            <span class="px-2 py-0.5 text-[10px] font-mono border border-white text-white rounded-sm">HOT</span>
+                        </div>
+                        <h3 class="text-lg text-white font-medium mb-2 group-hover:text-yellow-400 transition-colors">l0-omni-bridge</h3>
+                        <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow">
+                            Node.js script untuk LayerZero. Otomatisasi volume generation via Merkly dan L2Telegraph across 15 chains.
+                        </p>
+                        <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
+                            <span class="text-xs font-mono text-gray-500">ethers.js</span>
+                            <!-- Tombol Download yang memicu Auth -->
+                            <button onclick="requestDownload('https://link-file-anda.com/script2.zip')" class="btn-minimal px-3 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-2"><i class="fa-solid fa-download"></i> Download</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="tech-card p-6 rounded-sm flex flex-col h-full group">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="text-gray-400">
+                                <i class="fa-solid fa-terminal text-xl"></i>
+                            </div>
+                            <span class="px-2 py-0.5 text-[10px] font-mono border border-[#262626] text-gray-400 rounded-sm">NEW</span>
+                        </div>
+                        <h3 class="text-lg text-white font-medium mb-2 group-hover:text-green-400 transition-colors">sol-tx-spammer</h3>
+                        <p class="text-sm text-gray-400 font-light leading-relaxed mb-6 flex-grow">
+                            Generasi volume transaksi mikro di Solana. Menggunakan Jito bundle untuk anti-MEV dan custom RPC.
+                        </p>
+                        <div class="mt-auto pt-4 border-t border-[#171717] flex justify-between items-center">
+                            <span class="text-xs font-mono text-gray-500">solana-web3</span>
+                            <!-- Tombol Download yang memicu Auth -->
+                            <button onclick="requestDownload('https://link-file-anda.com/script3.zip')" class="btn-minimal px-3 py-1.5 rounded-sm text-[10px] uppercase font-mono tracking-wider flex items-center gap-2"><i class="fa-solid fa-download"></i> Download</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
-
     <!-- System Specs Section -->
     <section id="features" class="py-24 relative z-10 bg-[#050505] border-y border-[#171717]">
         <div class="max-w-6xl mx-auto px-6">
@@ -331,21 +381,52 @@
             </div>
         </div>
     </section>
+<!-- Video Showcase Section -->
+    <section id="tutorials" class="py-12 relative z-10 border-t border-[#171717]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-2xl font-medium tracking-tight text-white mb-2">Operation Visuals</h2>
+                    <p class="text-gray-400 font-light text-sm">Dokumentasi operasional & demo eksekusi script.</p>
+                </div>
+                <a href="LINK_CHANNEL_YOUTUBE_ANDA" target="_blank" class="font-mono text-xs text-red-500 hover:text-red-400 transition-colors flex items-center gap-2">
+                    <i class="fa-brands fa-youtube"></i> Subscribe
+                </a>
+            </div>
 
+            <!-- Terminal Styled Video Container -->
+            <div class="tech-card p-2 rounded-sm shadow-2xl">
+                <div class="flex items-center gap-2 px-2 pb-2 border-b border-[#262626] mb-2">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                    </div>
+                    <span class="text-[10px] text-gray-500 font-mono tracking-widest ml-2">ls_broadcast_feed.mp4</span>
+                </div>
+                <!-- YouTube Embed Ratio 16:9 -->
+                <div class="relative w-full aspect-video bg-[#050505]">
+                    <iframe class="absolute top-0 left-0 w-full h-full rounded-sm opacity-90 hover:opacity-100 transition-opacity duration-500" 
+                        src="https://www.youtube.com/embed/ID_VIDEO_YOUTUBE_ANDA?controls=1&rel=0&modestbranding=1" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Community CTA -->
     <section id="community" class="py-24 relative z-10">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-medium tracking-tight text-white mb-4">Initialize Connection</h2>
-            <p class="text-gray-400 font-light mb-8 max-w-xl mx-auto">
-                Akses script dan panduan lengkap hanya tersedia melalui Discord privat kami. Bergabung dan diskusikan strategi bersama ratusan operator node lainnya.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-4 font-mono text-sm">
-                <a href="#" class="btn-minimal px-8 py-3 rounded-sm flex items-center justify-center gap-2">
+<div class="flex flex-col sm:flex-row justify-center gap-4 font-mono text-sm">
+                <a href="LINK_DISCORD_ANDA" class="btn-minimal px-8 py-3 rounded-sm flex items-center justify-center gap-2">
                     <i class="fa-brands fa-discord"></i> Join Discord
                 </a>
-                <a href="#" class="btn-outline px-8 py-3 rounded-sm flex items-center justify-center gap-2">
+                <a href="LINK_TELEGRAM_ANDA" class="btn-outline px-8 py-3 rounded-sm flex items-center justify-center gap-2">
                     <i class="fa-brands fa-telegram text-gray-500"></i> Telegram Channel
+                </a>
+                <!-- Tambahan Tombol YouTube Minimalis -->
+                <a href="LINK_YOUTUBE_MAS_DODY" target="_blank" class="btn-outline px-8 py-3 rounded-sm flex items-center justify-center gap-2 hover:border-red-900 hover:text-red-500 transition-colors duration-300">
+                    <i class="fa-brands fa-youtube"></i> Watch Tutorials
                 </a>
             </div>
         </div>
@@ -390,12 +471,12 @@
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">></span>
                         <input type="password" id="auth-key-input" class="w-full bg-[#171717] border border-[#262626] rounded-sm py-2.5 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-[#525252] transition-colors" placeholder="****" autocomplete="off" onkeypress="handleAuthKeyPress(event)">
                     </div>
-<div class="mt-3 text-[10px] font-mono flex justify-between items-center h-4">
-    <span id="auth-status" class="text-gray-600">Dapatkan key dari Bot Telegram</span>
-    <a href="https://t.me/betatestlsbot?start=get" target="_blank" class="text-gray-500 hover:text-[#0088cc] transition-colors flex items-center gap-1">
-        <i class="fa-brands fa-telegram"></i> @betatestlsbot
-    </a>
-</div>
+                    <div class="mt-3 text-[10px] font-mono flex justify-between items-center h-4">
+                        <span id="auth-status" class="text-gray-600">Dapatkan key dari Bot Telegram</span>
+                        <a href="https://t.me/betatestlsbot?start=get" target="_blank" class="text-gray-500 hover:text-[#0088cc] transition-colors flex items-center gap-1">
+                            <i class="fa-brands fa-telegram"></i> @betatestlsbot
+                        </a>
+                    </div>
                 </div>
                 
                 <button id="btn-verify" onclick="verifyKey()" class="w-full btn-minimal py-2.5 rounded-sm uppercase tracking-wider text-xs font-mono flex justify-center items-center gap-2 focus:outline-none">
@@ -405,23 +486,29 @@
         </div>
     </div>
 
-    <script>
+<script>
         // --- Modal & Decryption Logic ---
         const authModal = document.getElementById('auth-modal');
         const authInput = document.getElementById('auth-key-input');
         const authStatus = document.getElementById('auth-status');
         const verifyBtn = document.getElementById('btn-verify');
-        const repoOverlay = document.getElementById('repo-lock-overlay');
-        const repoGrid = document.getElementById('repo-grid');
         
         let isUnlocked = false;
+        let pendingDownloadUrl = ''; // Menyimpan link file yang akan diunduh
+
+        // 1. FUNGSI UNTUK MENANGANI KLIK TOMBOL DOWNLOAD
+        function requestDownload(url) {
+            if (isUnlocked) {
+                // Jika sudah memasukkan key yang benar, langsung eksekusi download
+                window.open(url, '_blank');
+            } else {
+                // Jika belum auth, simpan url-nya dan tampilkan modal input key
+                pendingDownloadUrl = url;
+                openAuthModal();
+            }
+        }
 
         function openAuthModal() {
-            if (isUnlocked) {
-                // If already unlocked, just scroll to repo
-                document.getElementById('repository').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
             authModal.classList.remove('hidden');
             // Trigger reflow for animation
             void authModal.offsetWidth;
@@ -446,7 +533,7 @@
             authInput.disabled = false;
             verifyBtn.disabled = false;
             verifyBtn.innerHTML = 'Execute Handshake';
-            authStatus.innerHTML = '<span class="text-gray-600">Hint: Try \'LSAIRDROP\'</span>';
+            authStatus.innerHTML = '<span class="text-gray-600">Dapatkan key dari Bot Telegram</span>';
         }
 
         function handleAuthKeyPress(e) {
@@ -455,7 +542,7 @@
             }
         }
 
-async function verifyKey() {
+        async function verifyKey() {
             const key = authInput.value.trim();
             if (!key) return;
 
@@ -483,13 +570,22 @@ async function verifyKey() {
 
                 if (result.success) {
                     // Success State (Akses Pertama atau Perangkat Dikenali)
-                    authStatus.innerHTML = `<span class="text-green-500">${result.message} Mendekripsi...</span>`;
+                    authStatus.innerHTML = `<span class="text-green-500">${result.message} Memulai Unduhan...</span>`;
                     verifyBtn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> Success';
+                    
+                    // Tandai sesi ini sudah terbuka (isUnlocked)
+                    isUnlocked = true;
                     
                     setTimeout(() => {
                         closeAuthModal();
-                        unlockRepository();
-                    }, 800);
+                        
+                        // Eksekusi download yang tertunda tadi
+                        if (pendingDownloadUrl) {
+                            window.open(pendingDownloadUrl, '_blank');
+                            pendingDownloadUrl = ''; // Bersihkan variabel setelah dipakai
+                        }
+                    }, 1200);
+
                 } else {
                     // Failed State (Key salah, perangkat beda, dll)
                     authStatus.innerHTML = `<span class="text-red-500">Error: ${result.message}</span>`;
@@ -507,35 +603,6 @@ async function verifyKey() {
                 authInput.disabled = false;
                 verifyBtn.disabled = false;
             }
-        }
-        function unlockRepository() {
-            if (isUnlocked) return;
-            isUnlocked = true;
-            
-            // Remove the dark overlay covering the scripts
-            repoOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                repoOverlay.classList.add('hidden');
-            }, 500);
-
-            // Enable grid and make it fully visible
-            repoGrid.classList.remove('opacity-40', 'pointer-events-none', 'select-none');
-            
-            // Change lock icons inside the cards to green unlock icons
-            const locks = document.querySelectorAll('.script-lock-icon');
-            locks.forEach(lock => {
-                lock.classList.replace('fa-lock', 'fa-unlock');
-                lock.classList.replace('text-gray-600', 'text-green-500');
-            });
-
-            // Update main hero button text
-            const heroBtn = document.querySelector('button[onclick="openAuthModal()"]');
-            if(heroBtn) {
-                heroBtn.innerHTML = 'Browse Scripts <i class="fa-solid fa-arrow-right text-xs"></i>';
-            }
-            
-            // Smooth scroll down to the decrypted repo
-            document.getElementById('repository').scrollIntoView({ behavior: 'smooth' });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
