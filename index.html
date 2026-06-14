@@ -476,7 +476,7 @@
             try {
                 // PENTING: Jika bot/server sudah jalan di VPS, ganti localhost ini dengan IP VPS kamu
                 // Contoh: fetch('http://192.168.1.1:3000/api/scripts')
-                const response = await fetch('http://43.228.215.169.nip.io/api/scripts');
+                const response = await fetch('/api/scripts');
                 repoData = await response.json();
                 
                 // Setelah data berhasil diambil, jalankan fungsi pembuat Card
@@ -674,7 +674,7 @@
 
             try {
                 // Testing Lokal = http://localhost:3000/verifyKey. PENTING: Ganti ke IP server VPS saat live.
-                const response = await fetch('http://43.228.215.169.nip.io/verifyKey', {
+                const response = await fetch('/verifyKey', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
