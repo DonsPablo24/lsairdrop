@@ -1,5 +1,4 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/api/scripts",
@@ -22,17 +21,7 @@
     {
       "source": "/",
       "destination": "/dashboard",
-      "permanent": true
-    },
-    {
-      "source": "/index.html",
-      "destination": "/dashboard",
-      "permanent": true
-    },
-    {
-      "source": "/scripts.html",
-      "destination": "/repository",
-      "permanent": true
+      "permanent": false
     }
   ]
 }
